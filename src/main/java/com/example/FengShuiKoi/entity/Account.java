@@ -1,12 +1,12 @@
 package com.example.FengShuiKoi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +18,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Account implements UserDetails {
     @Id
@@ -53,6 +55,11 @@ public class Account implements UserDetails {
     }
 
     @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -71,4 +78,11 @@ public class Account implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    @OneToMany(mappedBy = "account")
+    @JsonIgnore
+    List<Product> products;
+
+
 }

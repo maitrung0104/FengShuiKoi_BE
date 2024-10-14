@@ -1,8 +1,12 @@
 package com.example.FengShuiKoi.service;
 
+import com.example.FengShuiKoi.entity.Account;
 import com.example.FengShuiKoi.entity.Product;
+import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.exception.EntityNotFoundException;
+import com.example.FengShuiKoi.model.ProductRequest;
 import com.example.FengShuiKoi.repository.ProductRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,20 +14,32 @@ import java.util.List;
 @Service
 public class ProductService {
     @Autowired
+    ModelMapper modelMapper;
+    @Autowired
+    AuthenticationService authenticationService;
+    @Autowired
     ProductRepository productRepository;
     //CREATE
-    public Product create(Product product){
-        Product newProduct= productRepository.save(product);
-        return newProduct;
+    public Product create(ProductRequest productRequest) {
+        try {
+            Product product = modelMapper.map(productRequest, Product.class);
+            Account accountRequest = authenticationService.getCurrentAccount();
+            product.setAccount(accountRequest); //set thong tin student cua account nay
+
+            Product newProduct = productRepository.save(product);
+            return newProduct;
+        }catch (Exception e) {
+            throw new DuplicateEntity("Duplication product code");
+
+        }
     }
     //READ
-    public List<Product> getAllStudent(){
+    public List<Product> getAllProduct(){
         List<Product>products=productRepository.findProductsByIsDeletedFalse()   ;
         return products;
     }
     //UPDATE
     public Product update(long id,Product product){
-        //Buoc 1 Tìm ra thằng student càn được update thông qua id
         Product oldProduct= productRepository.findProductById(id);
 
         if(oldProduct== null) throw new EntityNotFoundException("Product not Found!");
@@ -51,7 +67,6 @@ public class ProductService {
     public Product getProductById(long id){
         Product oldProduct= productRepository.findProductById(id);
         if(oldProduct==null) throw new EntityNotFoundException("Product not found !");
-        //if user.status== "BLOCK" => throw new EntityNotFoundException("Student not found!");
 
         return oldProduct;
     }
