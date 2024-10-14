@@ -33,7 +33,8 @@ public class Filter extends OncePerRequestFilter {
             "/v3/api-docs/**",
             "/swagger-resources/**",
             "/api/login",
-            "/api/register"
+            "/api/register",
+            "/api/forgot-password"
     );
     public boolean checkIsPublicAPI(String uri){
         //uri:/api/register
@@ -65,10 +66,10 @@ public class Filter extends OncePerRequestFilter {
 
             }catch(ExpiredJwtException e){
                 //response token het han
-                resolver.resolveException(request,response,null,new AuthException("Token Empty!!"));
+                resolver.resolveException(request,response,null,new AuthException("Expired Token!!"));
                 return;
             }catch(MalformedJwtException malformedJwtException){//token khong dung dinh dang
-                resolver.resolveException(request,response,null,new AuthException("Token Empty!!"));
+                resolver.resolveException(request,response,null,new AuthException("Invalid Token!!"));
                 return;
             }
             //=> token chuan

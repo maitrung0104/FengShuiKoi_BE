@@ -1,6 +1,5 @@
 package com.example.FengShuiKoi.repository;
 
-import com.example.FengShuiKoi.api.KoiAPI;
 import com.example.FengShuiKoi.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
