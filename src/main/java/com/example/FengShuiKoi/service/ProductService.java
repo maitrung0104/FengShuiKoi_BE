@@ -37,7 +37,7 @@ public class ProductService {
         oldProduct.setSize(product.getSize());
         oldProduct.setOrigin(product.getOrigin());
         oldProduct.setElement(product.getElement());
-        oldProduct.setDescription(product.getDescription());
+        oldProduct.setP_Description(product.getP_Description());
         oldProduct.setPrice(product.getPrice());
         // Bước 3 lưu db
         return productRepository.save(oldProduct);
