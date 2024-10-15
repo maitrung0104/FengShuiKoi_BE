@@ -38,6 +38,8 @@ public class SecurityConfig {
     @Autowired
     AuthService authService;
 
+
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
