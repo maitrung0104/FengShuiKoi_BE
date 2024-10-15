@@ -4,20 +4,14 @@ package com.example.FengShuiKoi.service;
 import com.example.FengShuiKoi.entity.User;
 import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.model.UserRequest;
-import com.example.FengShuiKoi.model.UserResponse;
+import com.example.FengShuiKoi.model.Response.UserResponse;
 import com.example.FengShuiKoi.repos.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -50,9 +44,17 @@ public class UserService {
         }
     }
     //Read
-    public List<User> getAllUser(){
-        List<User> users = userRepository.findAll();
-        return users;
+    public UserResponse getAllUser(int page, int size){
+
+         Page users = userRepository.findAll(PageRequest.of(page, size));
+         UserResponse userResponse = new UserResponse();
+            userResponse.setContent(users.getContent());
+            userResponse.setPageNumber(users.getNumber());
+            userResponse.setTotalElements(users.getNumberOfElements());
+            userResponse.setTotalPages(users.getTotalPages());
+
+
+             return userResponse;
     }
 
     //Update

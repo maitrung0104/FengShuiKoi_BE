@@ -3,9 +3,13 @@ package com.example.FengShuiKoi.service;
 import com.example.FengShuiKoi.entity.Product;
 import com.example.FengShuiKoi.exception.EntityNotFoundException;
 import com.example.FengShuiKoi.model.ProductRequest;
+import com.example.FengShuiKoi.model.Response.ProductResponse;
+import com.example.FengShuiKoi.model.Response.UserResponse;
 import com.example.FengShuiKoi.repos.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,9 +32,13 @@ public class ProductService {
          }
    }
     //READ
-    public List<Product> getAllProducts(){
-        List<Product>products=productRepository.findProductsByIsDeletedFalse()   ;
-        return products;
+    public ProductResponse getAllProducts(int page, int size) {
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setContent(productResponse.getContent());
+        productResponse.setPageNumber(productResponse.getPageNumber());
+        productResponse.setTotalElements(productResponse.getTotalElements());
+        productResponse.setTotalPages(productResponse.getTotalPages());
+        return productResponse;
     }
     //UPDATE
     public Product update(long id,ProductRequest productRequest){

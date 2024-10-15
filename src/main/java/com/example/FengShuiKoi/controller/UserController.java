@@ -2,19 +2,13 @@ package com.example.FengShuiKoi.controller;
 
 import com.example.FengShuiKoi.entity.User;
 import com.example.FengShuiKoi.model.UserRequest;
-import com.example.FengShuiKoi.repos.UserRepository;
+import com.example.FengShuiKoi.model.Response.UserResponse;
 import com.example.FengShuiKoi.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -38,11 +32,12 @@ public class UserController {
     }
 
 
-
     @GetMapping
-    public ResponseEntity getAllUsers() {
-        List<User> users = userService.getAllUser();
-        return ResponseEntity.ok(users);
+    public ResponseEntity  getAllUsers(
+            @RequestParam int page,
+            @RequestParam(defaultValue = "5") int size) {
+        UserResponse userResponse = userService.getAllUser(page, size);
+        return ResponseEntity.ok(userResponse);
     }
 
     @PutMapping("{userId}")
