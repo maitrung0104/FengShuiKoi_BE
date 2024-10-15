@@ -2,10 +2,7 @@ package com.example.FengShuiKoi.controller;
 
 
 import com.example.FengShuiKoi.entity.Account;
-import com.example.FengShuiKoi.model.AccountResponse;
-import com.example.FengShuiKoi.model.ForgotPassword;
-import com.example.FengShuiKoi.model.LoginRequest;
-import com.example.FengShuiKoi.model.RegisterRequest;
+import com.example.FengShuiKoi.model.*;
 import com.example.FengShuiKoi.service.AuthService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -45,5 +42,10 @@ public class Authentication {
     public ResponseEntity forgotPassword(@Valid @RequestBody ForgotPassword forgotPassword) {
         authService.forgotPassword(forgotPassword.getEmail());
         return ResponseEntity.ok("Check your email to confirm reset password");
+    }
+    @PostMapping("/reset-password")
+    public ResponseEntity resetPassword(@Valid @RequestBody ResetPassword resetPassword) {
+        authService.resetPassword(resetPassword);
+        return ResponseEntity.ok("Password reset successfully");
     }
 }

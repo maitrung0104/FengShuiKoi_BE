@@ -3,10 +3,7 @@ package com.example.FengShuiKoi.service;
 import com.example.FengShuiKoi.entity.Account;
 import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.exception.EntityNotFoundException;
-import com.example.FengShuiKoi.model.AccountResponse;
-import com.example.FengShuiKoi.model.EmailDetail;
-import com.example.FengShuiKoi.model.LoginRequest;
-import com.example.FengShuiKoi.model.RegisterRequest;
+import com.example.FengShuiKoi.model.*;
 import com.example.FengShuiKoi.repos.AccountRepository;
 import ognl.Token;
 import org.modelmapper.ModelMapper;
@@ -111,6 +108,18 @@ public class AuthService implements UserDetailsService {
         emailDetail.setLink("https://www.google.com/?token=" + tokenService.generateToken(account));
         emailService.sendEmail(emailDetail);
 
+    }
+
+    public Account resetPassword(ResetPassword resetPassword) {
+        Account account = getCurrentAccount();
+        account.setPassword(passwordEncoder.encode(resetPassword.getPassword()));
+        try{
+            accountRepository.save(account);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+        return account;
     }
 
 
