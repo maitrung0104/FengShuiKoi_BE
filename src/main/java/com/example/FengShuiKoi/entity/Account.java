@@ -1,7 +1,11 @@
 package com.example.FengShuiKoi.entity;
 
 
+<<<<<<< HEAD
 import com.example.FengShuiKoi.entity.Enum.Role;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+>>>>>>> origin/forgot-password
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -10,6 +14,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+<<<<<<< HEAD
+=======
+import javax.swing.*;
+>>>>>>> origin/forgot-password
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,8 +88,14 @@ public class Account implements UserDetails {
         return true;
     }
 
+<<<<<<< HEAD
 
 
 
+=======
+    @OneToMany(mappedBy = "account")
+    @JsonIgnore
+    List<User> users;
+>>>>>>> origin/forgot-password
 }
 

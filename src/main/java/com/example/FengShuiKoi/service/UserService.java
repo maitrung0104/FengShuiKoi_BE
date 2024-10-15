@@ -4,6 +4,7 @@ package com.example.FengShuiKoi.service;
 import com.example.FengShuiKoi.entity.User;
 import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.model.UserRequest;
+<<<<<<< HEAD
 import com.example.FengShuiKoi.model.Response.UserResponse;
 import com.example.FengShuiKoi.repos.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+=======
+import com.example.FengShuiKoi.repos.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+>>>>>>> origin/forgot-password
 
 @Service
 public class UserService {
@@ -23,11 +36,16 @@ public class UserService {
     @Autowired
     ModelMapper modelMapper;
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+    @Autowired
+    AuthService authService;
+>>>>>>> origin/forgot-password
 
 
     //CRUD
@@ -44,6 +62,7 @@ public class UserService {
         }
     }
     //Read
+<<<<<<< HEAD
     public UserResponse getAllUser(int page, int size){
 
          Page users = userRepository.findAll(PageRequest.of(page, size));
@@ -75,6 +94,28 @@ public class UserService {
         oldUser.setDateOfBirth(userRequest.getDateOfBirth());
 
         //save
+=======
+    public List<User> getAllUser(){
+        List<User> users = userRepository.findAll();
+        return users;
+    }
+
+    //Update
+    public User update(long id, User user){
+       User oldUser = userRepository.findUserById(id);
+
+       if( oldUser == null) throw new EntityNotFoundException("User not found");
+
+       oldUser.setName(user.getName());
+       oldUser.setAge(user.getAge());
+       oldUser.setGender(user.getGender());
+       oldUser.setEmail(user.getEmail());
+       oldUser.setAddress(user.getAddress());
+       oldUser.setPhone(user.getPhone());
+       oldUser.setDateOfBirth(user.getDateOfBirth());
+
+       //save
+>>>>>>> origin/forgot-password
         return userRepository.save(oldUser);
 
     }
@@ -85,6 +126,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
+<<<<<<< HEAD
 
 
 
@@ -93,3 +135,6 @@ public class UserService {
 
 
 
+=======
+}
+>>>>>>> origin/forgot-password

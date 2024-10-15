@@ -1,6 +1,10 @@
 package com.example.FengShuiKoi.model;
 
+<<<<<<< HEAD
 import com.example.FengShuiKoi.entity.Enum.Role;
+=======
+import com.example.FengShuiKoi.entity.Role;
+>>>>>>> origin/forgot-password
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

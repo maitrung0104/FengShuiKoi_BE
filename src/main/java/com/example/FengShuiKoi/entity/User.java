@@ -43,6 +43,7 @@ public class User {
     @NotNull(message = "Date of birth in mandatory")
     LocalDate dateOfBirth;
 
+<<<<<<< HEAD
     @OneToMany(mappedBy = "user")
     List<Product> products;
 
@@ -66,4 +67,23 @@ public class User {
 
 
 
+=======
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    Account account;
+
+    @OneToMany(mappedBy = "user")
+    List<Product> products;
+
+    @ManyToOne
+    @JoinColumn(name = "element_id", referencedColumnName = "eleId")
+    Element element;
+
+    @OneToMany(mappedBy = "user")
+    List<Plan> plans;
+
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    OrderPlan orderPlan;
+//}
+>>>>>>> origin/forgot-password
 }
