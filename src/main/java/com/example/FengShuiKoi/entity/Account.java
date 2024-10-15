@@ -1,88 +1,28 @@
 package com.example.FengShuiKoi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-public class Account implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Account {
+    @NotNull(message = "ID is mandatory")
     long id;
-    @Enumerated(EnumType.STRING)
-    Role role;
-    @NotBlank(message = "Code can not be blank!")
-    @Pattern(regexp = "KH\\d{6}",message = "Invalid Code!")
-    @Column(unique = true)
-    String code;
-    @Email(message = "Email not valid!")
-    String email;
-    @Pattern(regexp="(84|0[3|5|7|8|9])+(\\d{8})",message = "Phone invalid")
-    String phone;
-    Date createAt;
-    @NotBlank(message = "Password can not be blank")
-    @Size(min = 6, message = "Password must be at least 6 characters!")
+
+    @NotBlank(message = "Username is mandatory")
+    String username;
+
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     String password;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities= new ArrayList<>();
-        if(this.role!=null){
-            authorities.add(new SimpleGrantedAuthority(this.role.toString()));
+    @Email(message = "Email should be valid")
+    @NotBlank(message = "Email is mandatory")
+    String email;
 
-        }
-        return authorities;
-    }
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-
-    @OneToMany(mappedBy = "account")
-    @JsonIgnore
-    List<Product> products;
-
-
+    @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Phone number is invalid")
+    String phone;
 }
+

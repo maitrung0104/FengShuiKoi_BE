@@ -5,23 +5,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.lang.reflect.Field;
+
+
 @RestControllerAdvice
 public class ValidationHandler {
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handleValidation(MethodArgumentNotValidException exception){
-        String message ="";
-        for(FieldError fieldError: exception.getBindingResult().getFieldErrors()){
-            message+= fieldError.getDefaultMessage()+"\n";
+    public ResponseEntity handleValidation (MethodArgumentNotValidException exception){
+        String msg = "";
+        for(FieldError fieldError :exception.getBindingResult().getFieldErrors()){
+            //loop qua từng field của dữ liệu , nếu cái nào có lỗi thì thêm vào msg
+            msg += fieldError.getDefaultMessage()+"\n";
+
         }
-        return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(msg, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handleValidation(Exception exception){
+    public ResponseEntity handleValidation (Exception exception){
+        // mỗi khi gặp lỗi này lập tức gọi
         return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+
+
 }
+

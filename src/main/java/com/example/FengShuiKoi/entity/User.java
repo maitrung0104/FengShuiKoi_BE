@@ -1,34 +1,36 @@
 package com.example.FengShuiKoi.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    @NotBlank(message = "Can not be blank!!")
-
+    @NotBlank(message = "Name is mandatory")
     String name;
-    @Pattern(regexp="(84|0[3|5|7|8|9])+(\\d{8})",message = "Phone invalid")
 
-    String phone;
-    @NotBlank(message = "Can not be blank!!")
+    @Min(value = 0, message = "Age should not be less than 0")
+    @Max(value = 150, message = "Age should not be greater than 150")
+    String age;
 
+
+    @Email(message = "Email should be valid")
+    @NotBlank(message = "Email is mandatory")
     String email;
-    @NotBlank(message = "Can not be blank!!")
+
+    @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Phone number is invalid")
+    String phone;
+
+    @NotBlank(message = "Address is mandatory")
+    String address;
+
+    @NotBlank(message = "Gender is mandatory")
     String gender;
-    @Past
-    @NotNull(message = "Can not be blank!!")
-    LocalDate dob;
 
 
-
+    @Past @NotNull(message = "Date of birth in mandatory")
+    LocalDate dateOfBirth;
 }
