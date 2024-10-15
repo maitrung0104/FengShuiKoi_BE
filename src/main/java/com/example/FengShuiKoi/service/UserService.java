@@ -2,9 +2,12 @@ package com.example.FengShuiKoi.service;
 
 
 import com.example.FengShuiKoi.entity.User;
+import com.example.FengShuiKoi.exception.DuplicateEntity;
+import com.example.FengShuiKoi.model.UserRequest;
 import com.example.FengShuiKoi.repos.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,11 +21,26 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Autowired
+    AuthService authService;
+
+
     //CRUD
     //create
-    public User createUser(User user){
-        User newUser = userRepository.save(user);
+    public User createUser(UserRequest userRequest){
+        //add user vao db bang repos
+        try {
+
+            User user = modelMapper.map(userRequest, User.class);
+            User newUser = userRepository.save(user);
             return newUser;
+        }catch (Exception e){
+            throw new DuplicateEntity("Duplicate email");
+        }
     }
     //Read
     public List<User> getAllUser(){
