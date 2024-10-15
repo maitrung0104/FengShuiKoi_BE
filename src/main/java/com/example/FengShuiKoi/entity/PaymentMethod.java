@@ -1,22 +1,28 @@
 package com.example.FengShuiKoi.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
-@Table(name = "payment_method")
+@Getter
+@Setter
 public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long pmId;
-    String pmName;
+    int id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "pay_id", referencedColumnName = "payId")
-//    PaymentTotal paymentTotal;
-//
-//    @OneToMany(mappedBy = "paymentMethod", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<OrderPlan> orderPlans;
+    String name;
+
+    @ManyToOne
+    @JoinColumn(name = "payment_total_id")
+    PaymentTotal paymentTotal;
+
+
+    @OneToOne
+    @JoinColumn(name = "invoice_id")
+    Invoice invoice;
+
+
+
 }

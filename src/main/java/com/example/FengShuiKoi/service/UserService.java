@@ -4,14 +4,18 @@ package com.example.FengShuiKoi.service;
 import com.example.FengShuiKoi.entity.User;
 import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.model.UserRequest;
+import com.example.FengShuiKoi.model.UserResponse;
 import com.example.FengShuiKoi.repos.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,8 +29,11 @@ public class UserService {
     @Autowired
     ModelMapper modelMapper;
 
-    @Autowired
-    AuthService authService;
+
+
+
+
+
 
 
     //CRUD
@@ -49,20 +56,23 @@ public class UserService {
     }
 
     //Update
-    public User update(long id, User user){
-       User oldUser = userRepository.findUserById(id);
 
-       if( oldUser == null) throw new EntityNotFoundException("User not found");
+    public User update(long id, UserRequest userRequest){
+        User oldUser = userRepository.findUserById(id);
 
-       oldUser.setName(user.getName());
-       oldUser.setAge(user.getAge());
-       oldUser.setGender(user.getGender());
-       oldUser.setEmail(user.getEmail());
-       oldUser.setAddress(user.getAddress());
-       oldUser.setPhone(user.getPhone());
-       oldUser.setDateOfBirth(user.getDateOfBirth());
+        if( oldUser == null) throw new EntityNotFoundException("User not found");
 
-       //save
+        modelMapper.map(userRequest, oldUser);
+
+        oldUser.setName(userRequest.getName());
+        oldUser.setAge(userRequest.getAge());
+        oldUser.setGender(userRequest.getGender());
+        oldUser.setEmail(userRequest.getEmail());
+        oldUser.setAddress(userRequest.getAddress());
+        oldUser.setPhone(userRequest.getPhone());
+        oldUser.setDateOfBirth(userRequest.getDateOfBirth());
+
+        //save
         return userRepository.save(oldUser);
 
     }
@@ -73,4 +83,11 @@ public class UserService {
         userRepository.delete(user);
     }
 
-}
+
+
+
+    }
+
+
+
+

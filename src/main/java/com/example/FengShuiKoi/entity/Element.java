@@ -1,40 +1,36 @@
 package com.example.FengShuiKoi.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
-@Data
-@Table(name = "element_feng")
 public class Element {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int eleId;
+    int id;
 
     String element;
 
-    @OneToOne(mappedBy = "element")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     User user;
 
-//    @OneToMany(mappedBy = "element")
-//    List<Product> products;
+    @OneToMany(mappedBy = "element")
+    List<Product> productList;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "suitable_element",
-//            joinColumns = @JoinColumn(name = "ele_id"),
-//            inverseJoinColumns = @JoinColumn(name = "sui_element")
-//    )
-//    List<Element> suitableElements;
-//
-//    @ManyToMany(mappedBy = "suitableElements")
-//    List<Element> compatibleElements;
-//
-//    @OneToOne(mappedBy = "element")
-//    Direction direction;
-//
-//    @OneToOne(mappedBy = "element")
-//    KoiFishPond koiFishPond;
+    @OneToMany(mappedBy = "element")
+    List<Suitable> suitableList;
+
+    @OneToOne
+    @JoinColumn(name = "LakeDirection_id")
+    LakeDirection lakeDirection;
+
+    @OneToOne
+    @JoinColumn(name = "Pond_id")
+    KoiFishPond koiFishPond;
 }

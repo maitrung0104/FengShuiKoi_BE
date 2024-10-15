@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-
-public class KoiFishPond {
+public class Suitable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String shape;
+    String s_element;
 
-    int pond_element;
-
-    @OneToOne(mappedBy = "koiFishPond")
+    @ManyToOne
+    @JoinColumn(name = "element_id")
     Element element;
+
+
 }

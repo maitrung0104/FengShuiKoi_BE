@@ -1,4 +1,4 @@
-package com.example.FengShuiKoi.entity;
+package com.example.FengShuiKoi.entity.Enum;
 
 
 //enum dinh nghia cac constant
