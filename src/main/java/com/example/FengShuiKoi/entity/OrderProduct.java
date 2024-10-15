@@ -1,25 +1,33 @@
 package com.example.FengShuiKoi.entity;
 
+import com.example.FengShuiKoi.entity.Enum.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+
+@Getter
+@Setter
 @Entity
-@Data
-@Table(name = "order_product")
 public class OrderProduct {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int ordId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int id;
 
-    String ordTotal;
+    String total;
 
     @Enumerated(EnumType.STRING)
-    PaymentStatus ordStatus;
+    PaymentStatus status;
 
-//    @OneToMany(mappedBy = "orderProduct", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<OrderDetails> orderDetails;
-//
-//    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-//    PaymentTotal paymentTotal;
+    @OneToMany(mappedBy = "orderProducts")
+    List<OrderDetail> orderDetails;
+
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    PaymentTotal paymentTotal;
+
+
 }

@@ -7,16 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-
-public class KoiFishPond {
+public class LakeDirection {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    String shape;
+    String direction;
 
-    int pond_element;
+    int lake_element;
 
-    @OneToOne(mappedBy = "koiFishPond")
+    @OneToOne(mappedBy = "lakeDirection")
     Element element;
 }

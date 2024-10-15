@@ -1,11 +1,13 @@
 package com.example.FengShuiKoi.controller;
 
 import com.example.FengShuiKoi.entity.Product;
+import com.example.FengShuiKoi.model.ProductRequest;
 import com.example.FengShuiKoi.service.ProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,17 +16,20 @@ import java.util.List;
 @RequestMapping("/api/products")
 @CrossOrigin("*")
 @SecurityRequirement(name = "api")
+
+
+
 public class ProductController {
 
     @Autowired
     ProductService productService;
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody Product product){
-        Product newProduct= productService.create(product);
+    public ResponseEntity createProduct(@Valid @RequestBody ProductRequest product){
+        Product newProduct= productService.createProduct(product);
 
         return ResponseEntity.ok(newProduct);
     }
-    //lấy sinh viên hiện tại
+
     @GetMapping
     public ResponseEntity getAllProducts() {
         List<Product> products = productService.getAllProducts();
@@ -32,10 +37,10 @@ public class ProductController {
     }
 
 
-    //api/student/{studentId}
+
     @PutMapping("{productId}")
-    public ResponseEntity update(@PathVariable long productId, @Valid @RequestBody Product product){
-        Product updatedProduct= productService.update(productId,product);
+    public ResponseEntity update(@PathVariable long productId, @Valid @RequestBody ProductRequest productRequest){
+        Product updatedProduct= productService.update(productId,productRequest);
         return ResponseEntity.ok(updatedProduct);
     }
     @DeleteMapping("{productId}")

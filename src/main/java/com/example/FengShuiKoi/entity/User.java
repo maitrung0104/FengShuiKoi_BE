@@ -43,21 +43,27 @@ public class User {
     @NotNull(message = "Date of birth in mandatory")
     LocalDate dateOfBirth;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    Account account;
-
     @OneToMany(mappedBy = "user")
     List<Product> products;
 
-    @ManyToOne
-    @JoinColumn(name = "element_id", referencedColumnName = "eleId")
+    @OneToOne(mappedBy = "user")
     Element element;
 
-    @OneToMany(mappedBy = "user")
-    List<Plan> plans;
+    @ManyToOne
+    @JoinColumn(name = "u_plan")
+    Plan plan;
 
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    OrderPlan orderPlan;
-//}
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    Invoice invoice;
+
+
+
+
+
+
+
+
+
+
 }

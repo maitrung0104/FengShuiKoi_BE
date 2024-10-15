@@ -1,6 +1,6 @@
 package com.example.FengShuiKoi.model;
 
-import com.example.FengShuiKoi.entity.Role;
+import com.example.FengShuiKoi.entity.Enum.Role;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
