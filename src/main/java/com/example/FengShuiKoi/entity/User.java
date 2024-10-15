@@ -1,5 +1,9 @@
 package com.example.FengShuiKoi.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +12,13 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
+
     @NotBlank(message = "Name is mandatory")
     String name;
 
@@ -21,7 +31,7 @@ public class User {
     @NotBlank(message = "Email is mandatory")
     String email;
 
-    @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Phone number is invalid")
+    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b", message = "Phone number is invalid")
     String phone;
 
     @NotBlank(message = "Address is mandatory")
