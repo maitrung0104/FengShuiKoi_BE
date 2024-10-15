@@ -2,6 +2,7 @@ package com.example.FengShuiKoi.controller;
 
 import com.example.FengShuiKoi.entity.User;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class UserController {
      List<User> users = new ArrayList<>();
 
     @PostMapping
-    public User createUser(@Valid @RequestBody User user) {
+    public ResponseEntity createUser(@Valid @RequestBody User user) {
         users.add(user);
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")
