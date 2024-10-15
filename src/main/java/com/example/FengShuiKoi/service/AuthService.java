@@ -4,15 +4,18 @@ import com.example.FengShuiKoi.entity.Account;
 import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.exception.EntityNotFoundException;
 import com.example.FengShuiKoi.model.AccountResponse;
+import com.example.FengShuiKoi.model.EmailDetail;
 import com.example.FengShuiKoi.model.LoginRequest;
 import com.example.FengShuiKoi.model.RegisterRequest;
 import com.example.FengShuiKoi.repos.AccountRepository;
-import jakarta.validation.ConstraintViolationException;
+import ognl.Token;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +42,13 @@ public class AuthService implements UserDetailsService {
     @Autowired
     TokenService tokenService;
 
+    @Autowired
+    EmailService emailService;
+
+
+
+
+
     public AccountResponse register (RegisterRequest registerRequest) {
 
            Account account = modelMapper.map(registerRequest, Account.class);
@@ -46,6 +56,13 @@ public class AuthService implements UserDetailsService {
             String originPassword = account.getPassword();
             account.setPassword(passwordEncoder.encode(originPassword));
             Account newAccount = accountRepository.save(account);
+
+            //send email for user
+            EmailDetail emailDetail = new EmailDetail();
+            emailDetail.setReceiver(newAccount);
+            emailDetail.setSubject("Welcome to FengShuiKoi");
+            emailDetail.setLink("https://www.google.com");
+            emailService.sendEmail(emailDetail);
 
             return modelMapper.map(newAccount, AccountResponse.class);
         } catch (Exception e) {
@@ -82,10 +99,32 @@ public class AuthService implements UserDetailsService {
 
     }
 
+    public void forgotPassword(String email) {
+        Account account = accountRepository.findAccountByEmail(email);
+        if(account == null) {
+            throw new EntityNotFoundException("Account not found");
+        }
+        String token = tokenService.generateToken(account);
+        EmailDetail emailDetail = new EmailDetail();
+        emailDetail.setReceiver(account);//set receiver
+        emailDetail.setSubject("Reset password");
+        emailDetail.setLink("https://www.google.com/?token=" + tokenService.generateToken(account));
+        emailService.sendEmail(emailDetail);
+
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return accountRepository.findAccountByUsername(username);
 
+    }
+
+    public Account getCurrentAccount(){
+        Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //phai get thong tin user tu database
+
+        return accountRepository.findAccountById(account.getId());
     }
 }
 

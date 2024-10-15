@@ -1,6 +1,7 @@
 package com.example.FengShuiKoi.controller;
 
 import com.example.FengShuiKoi.entity.User;
+import com.example.FengShuiKoi.model.UserRequest;
 import com.example.FengShuiKoi.repos.UserRepository;
 import com.example.FengShuiKoi.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,7 +28,7 @@ public class UserController {
 
     @PostMapping
 
-    public ResponseEntity createUser(@Valid @RequestBody User user) {
+    public ResponseEntity createUser(@Valid @RequestBody UserRequest user) {
         User newUser = userService.createUser(user);
 
         return ResponseEntity.ok(newUser);

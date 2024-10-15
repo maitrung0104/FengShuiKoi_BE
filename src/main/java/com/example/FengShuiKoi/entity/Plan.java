@@ -17,8 +17,9 @@ public class Plan {
     int plPrice;
     String plDescription;
 
-    @OneToMany(mappedBy = "plan")
-    List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "u_plan")
+    User user;
 //    @OneToMany(mappedBy = "plan")
 //    List<OrderPlan> orderPlan;
 

@@ -1,5 +1,6 @@
 package com.example.FengShuiKoi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -42,6 +43,10 @@ public class User {
     @NotNull(message = "Date of birth in mandatory")
     LocalDate dateOfBirth;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    Account account;
+
     @OneToMany(mappedBy = "user")
     List<Product> products;
 
@@ -49,9 +54,8 @@ public class User {
     @JoinColumn(name = "element_id", referencedColumnName = "eleId")
     Element element;
 
-    @ManyToOne
-    @JoinColumn(name = "plan_id", referencedColumnName = "plId")
-    Plan plan;
+    @OneToMany(mappedBy = "user")
+    List<Plan> plans;
 
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    OrderPlan orderPlan;
