@@ -1,4 +1,4 @@
-package com.example.FengShuiKoi.model;
+package com.example.FengShuiKoi.model.Response;
 
 import lombok.Data;
 
