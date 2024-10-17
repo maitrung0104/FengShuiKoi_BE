@@ -2,7 +2,6 @@ package com.example.FengShuiKoi.model;
 
 
 import com.example.FengShuiKoi.entity.Enum.Category;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +12,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class ProductRequest {
+public class KoiRequest {
 
     @NotBlank(message = "Species can not be blank")
     String species;
@@ -42,6 +41,8 @@ public class ProductRequest {
     @Pattern(regexp = "P\\d{6}", message = "Product code is not valid! ")
     String productCode;
 
+
+    String image;
 
     Timestamp createdAt;
 

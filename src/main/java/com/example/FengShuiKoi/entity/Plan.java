@@ -31,12 +31,7 @@ public class Plan {
 
     String description;
 
-    @OneToMany(mappedBy = "plan")
-    List<User> userList;
 
-    @ManyToOne
-    @JoinColumn(name = "plan_id")
-    PaymentTotal paymentTotal;
 
     @Enumerated(EnumType.STRING)
     Role role;

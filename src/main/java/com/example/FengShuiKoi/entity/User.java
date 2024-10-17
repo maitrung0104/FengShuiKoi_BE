@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_feng")
+
 public class User {
 
     @Id
@@ -43,19 +43,10 @@ public class User {
     @NotNull(message = "Date of birth in mandatory")
     LocalDate dateOfBirth;
 
-    @OneToMany(mappedBy = "user")
-    List<Product> products;
-
-    @OneToOne(mappedBy = "user")
-    Element element;
-
     @ManyToOne
-    @JoinColumn(name = "u_plan")
-    Plan plan;
-
-    @OneToOne
     @JoinColumn(name = "user_id")
-    Invoice invoice;
+    Account account;
+
 
 
 

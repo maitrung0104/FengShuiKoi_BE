@@ -3,25 +3,24 @@ package com.example.FengShuiKoi.entity;
 import com.example.FengShuiKoi.entity.Enum.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.sql.Timestamp;
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "product_feng")
-public class Product {
+
+public class Koi {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    long id;
+    UUID id;
 
     @JsonIgnore
     boolean isDeleted = false;
@@ -36,6 +35,7 @@ public class Product {
     float size;
 
 
+
     int age;
 
 
@@ -44,13 +44,14 @@ public class Product {
 
     String p_element;
 
+    String image;
 
     String description;
 
 
     String price;
 
-    @Pattern(regexp = "P\\d{6}", message = "Product code is not valid! ")
+    @Pattern(regexp = "P\\d{6}", message = "Koi code is not valid! ")
     String productCode;
 
 
@@ -63,25 +64,13 @@ public class Product {
     @Enumerated(EnumType.STRING)
     Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    @OneToMany(mappedBy = "koi")
+    @JsonIgnore
+    List<OrderDetail> orderDetails;
 
-    @ManyToOne
-    @JoinColumn(name = "element_id")
-    Element element;
-
-    @ManyToOne
-    @JoinColumn(name = "OrderDetail_id")
-    OrderDetail orderDetail;
 
 
 
 
 
 }
-
-
-
-
-
