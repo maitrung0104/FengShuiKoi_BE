@@ -40,10 +40,6 @@ public class KoiController {
 
 
 
-    @GetMapping("/{id}")
-    public Koi getKoiById(@PathVariable UUID id) {
-        return koiService.getProductById(id);
-    }
     @PutMapping("{id}")
     public ResponseEntity update(@PathVariable UUID id, @RequestBody Koi koi) {
         Koi updateKoi = koiService.update(id, koi);

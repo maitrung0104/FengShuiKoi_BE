@@ -23,11 +23,11 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-            @JsonIgnore
-    Orders orderProduct;
+    @JsonIgnore
+    Orders orders;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "koi_id")
     Koi koi;
 
 }
