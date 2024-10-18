@@ -1,6 +1,6 @@
 package com.example.FengShuiKoi.entity;
 
-import com.example.FengShuiKoi.entity.Enum.PaymentStatus;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,11 +27,14 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-            @JsonIgnore
+    @JsonIgnore
     Account member;
 
-    @OneToMany(mappedBy = "orderProduct", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     List<OrderDetail> orderDetails;
+
+    @OneToOne(mappedBy = "orders")
+    Payment payment;
 
 
 }

@@ -68,6 +68,11 @@ public class Koi {
     @JsonIgnore
     List<OrderDetail> orderDetails;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    @JsonIgnore
+    Account account;
+
 
 
 

@@ -9,23 +9,25 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-    @Service
+@Service
     public class KoiService {
 
         @Autowired
         KoiRepository koiRepository;
 
-        public Koi create(Koi product) {
-            return koiRepository.save(product);
+        @Autowired
+        AuthService authService;
+
+        public Koi create(Koi koi) {
+            koi.setAccount(authService.getCurrentAccount());
+            return koiRepository.save(koi);
         }
 
         public List<Koi> getAll() {
             return koiRepository.findAll();
         }
 
-        public Koi getProductById(UUID id) {
-            return koiRepository.findKoiById(id);
-        }
+
 
         public Koi update(UUID id, Koi product) {
             // implementation

@@ -1,5 +1,6 @@
 package com.example.FengShuiKoi.controller;
 
+import com.example.FengShuiKoi.entity.Account;
 import com.example.FengShuiKoi.entity.Orders;
 import com.example.FengShuiKoi.model.OrderRequest;
 import com.example.FengShuiKoi.repos.OrderRepository;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/order")
@@ -27,14 +29,20 @@ public class OrderController {
     AuthService authService;
 
     @PostMapping
-    public ResponseEntity createOrder(@RequestBody OrderRequest orderRequest){
-        Orders orderProduct = orderService.create(orderRequest);
-        return ResponseEntity.ok(orderProduct);
+    public ResponseEntity create(@RequestBody OrderRequest orderRequest) throws Exception {
+        String vnPayURL  = orderService.createUrl(orderRequest);
+        return ResponseEntity.ok(vnPayURL);
     }
     @GetMapping
-    public ResponseEntity<List<Orders>> getAllOrders() {
-        List<Orders> orders = orderRepository.findAll();
+    public ResponseEntity get(){
+        Account account = authService.getCurrentAccount();
+        List<Orders> orders = orderRepository.findOrdersByMember(account);
         return ResponseEntity.ok(orders);
+    }
+    @PostMapping("/transaction")
+    public ResponseEntity createTransaction(@RequestParam UUID orderID) {
+        orderService.createTransaction(orderID);
+        return ResponseEntity.ok("success");
     }
 
 }

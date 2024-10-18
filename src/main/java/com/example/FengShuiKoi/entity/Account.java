@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +30,7 @@ public class Account implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
+    float balance = 0;
 
     @NotBlank(message = "Username is mandatory")
     @Column(unique = true)
@@ -92,6 +94,17 @@ public class Account implements UserDetails {
     @OneToMany(mappedBy = "member")
     @JsonIgnore
     List<Orders> orders;
+
+    @OneToMany(mappedBy = "from")
+    @JsonIgnore
+    List<Transactions> transactionsFrom;
+
+    @OneToMany(mappedBy = "to")
+    @JsonIgnore
+    List<Transactions> transactionsTo;
+
+    @OneToMany(mappedBy = "account")
+    List<Koi> kois;
 
 
 }
