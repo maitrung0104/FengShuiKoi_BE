@@ -25,7 +25,7 @@ public class Plan {
 
     String name;
 
-
+    @Min(value = 0)
     int price;
 
 

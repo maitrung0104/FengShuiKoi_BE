@@ -31,9 +31,11 @@ public class Orders {
     Account member;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+            @JsonIgnore
     List<OrderDetail> orderDetails;
 
     @OneToOne(mappedBy = "orders")
+            @JsonIgnore
     Payment payment;
 
 

@@ -14,6 +14,7 @@ import java.util.UUID;
 @RequestMapping("/api/koi")
 @SecurityRequirement(name = "api")
 @CrossOrigin(origins = "*")
+
 public class KoiController {
 
     @Autowired
