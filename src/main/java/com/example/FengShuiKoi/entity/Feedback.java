@@ -3,27 +3,24 @@ package com.example.FengShuiKoi.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-public class CartItem {
+@Data
+public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    long id;
 
-    int quantity;
-
-    String image;
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-            @JsonIgnore
-    Cart cart;
+    String content;
+    int rating;
 
     @ManyToOne
-    @JoinColumn(name = "koi_id")
+    @JoinColumn(name = "member_id")
             @JsonIgnore
-    Koi koi;
+    Account member;
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+            @JsonIgnore
+    Account shop;
 }

@@ -4,12 +4,9 @@ import com.example.FengShuiKoi.entity.Enum.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -25,7 +22,7 @@ public class Plan {
 
     String name;
 
-
+    @Min(value = 0)
     int price;
 
 
@@ -35,4 +32,12 @@ public class Plan {
 
     @Enumerated(EnumType.STRING)
     Role role;
+
+    @Data
+    public static class FeedbackRequest {
+
+        String content;
+        int rating;
+        long shopId;
+    }
 }
