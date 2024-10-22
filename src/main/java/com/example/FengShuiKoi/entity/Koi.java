@@ -28,21 +28,16 @@ public class Koi {
 
     String species;
 
-
     String colour;
-
 
     float size;
 
-
-
     int age;
-
 
     String origin;
 
 
-    String p_element;
+    String element;
 
     String image;
 
@@ -61,8 +56,7 @@ public class Koi {
     String createdBy;
 
 
-    @Enumerated(EnumType.STRING)
-    Category category;
+
 
     @OneToMany(mappedBy = "koi")
     @JsonIgnore
