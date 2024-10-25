@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -33,11 +35,7 @@ public class Plan {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    @Data
-    public static class FeedbackRequest {
+    @OneToMany(mappedBy = "plan")
+    List<Account> accounts;
 
-        String content;
-        int rating;
-        long shopId;
-    }
 }
