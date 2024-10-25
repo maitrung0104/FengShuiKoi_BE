@@ -114,5 +114,10 @@ public class Account implements UserDetails {
     @JsonIgnore
     List<Feedback> shop_feedbacks;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_plan")
+    @JsonIgnore
+    Plan plan;
+
 }
 
