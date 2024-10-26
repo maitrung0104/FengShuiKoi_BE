@@ -1,6 +1,5 @@
 package com.example.FengShuiKoi.controller;
 
-import com.example.FengShuiKoi.service.CanChiService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +14,9 @@ import java.time.format.DateTimeParseException;
 @RestController
 @RequestMapping("/api/canchi")
 @SecurityRequirement(name="api")
-public class CanChiAPI {
+public class CanChiService {
     @Autowired
-    CanChiService canChiService;
+    com.example.FengShuiKoi.service.CanChiService canChiService;
     @GetMapping("/menh")
     public String getMenh(@RequestParam String date) {
         try {
