@@ -1,9 +1,13 @@
 package com.example.FengShuiKoi.service;
 
+import com.example.FengShuiKoi.entity.Account;
+import com.example.FengShuiKoi.entity.Enum.Role;
 import com.example.FengShuiKoi.entity.Plan;
 import com.example.FengShuiKoi.exception.EntityNotFoundException;
 import com.example.FengShuiKoi.model.PlanRequest;
+import com.example.FengShuiKoi.repos.AccountRepository;
 import com.example.FengShuiKoi.repos.PlanRepository;
+import org.hibernate.annotations.Array;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,12 @@ public class PlanService {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    AuthService authService;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     // CREATE
     public Plan createPlan(PlanRequest planRequest) {
@@ -75,6 +85,8 @@ public class PlanService {
         return planRepository.save(oldPlan);
 
     }
+    // Purchase Plan
+
 
 
 }

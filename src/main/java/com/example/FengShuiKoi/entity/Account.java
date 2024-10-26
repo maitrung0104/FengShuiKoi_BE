@@ -106,6 +106,18 @@ public class Account implements UserDetails {
     @OneToMany(mappedBy = "account")
     List<Koi> kois;
 
+    @OneToMany(mappedBy = "member")
+    @JsonIgnore
+    List<Feedback> member_feedbacks;
+
+    @OneToMany(mappedBy = "shop")
+    @JsonIgnore
+    List<Feedback> shop_feedbacks;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_plan")
+    @JsonIgnore
+    Plan plan;
 
 }
 
