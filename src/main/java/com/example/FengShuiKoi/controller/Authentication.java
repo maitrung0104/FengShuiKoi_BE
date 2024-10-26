@@ -27,7 +27,7 @@ public class Authentication {
         return ResponseEntity.ok(newAccount);
     }
 
-    @PostMapping("login")
+        @PostMapping("login")
     public ResponseEntity login(@Valid @RequestBody LoginRequest loginRequest){
         AccountResponse newAccount = authService.login(loginRequest);
         return ResponseEntity.ok(newAccount);
