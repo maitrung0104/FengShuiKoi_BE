@@ -36,7 +36,8 @@ public class Filter extends OncePerRequestFilter {
             "/api/login",
             "/api/register",
             "/api/forgot-password",
-            "/api/canchi/menh"
+            "/api/canchi/menh",
+            "/api/info/advice"
 
 
 

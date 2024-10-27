@@ -14,11 +14,11 @@ import lombok.Setter;
 public class KoiFishPond {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Long id;
 
     String shape;
 
-    int pond_element;
+
 
     @ManyToOne
     @JoinColumn(name = "ele_id")

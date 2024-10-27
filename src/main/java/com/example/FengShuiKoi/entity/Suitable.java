@@ -1,7 +1,6 @@
 package com.example.FengShuiKoi.entity;
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,29 +18,15 @@ public class Suitable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String s_element;
-    @ManyToMany(mappedBy ="suitables" )
-    Set<Element> elements;
+//    @ManyToMany(mappedBy = "suitables")
+//    Set<Element> elements;
+    @ManyToOne
+    @JoinColumn(name = "element_id")
+    private Element element; // Mệnh
+
+    @ManyToOne
+    @JoinColumn(name = "suitable_element_id")
+    private Element suitableElement; // Mệnh thích hợp
 
 
-
-=======
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
-
-@Entity
-@Getter
-@Setter
-public class Suitable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-
-
-    @ManyToMany(mappedBy = "suitables")
-
-    List<Element> elements;
->>>>>>> ce7b842a317ecb436374e78fb3107b52d1f09f51
 }
