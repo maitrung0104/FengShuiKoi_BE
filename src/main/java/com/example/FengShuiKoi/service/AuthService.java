@@ -1,6 +1,7 @@
 package com.example.FengShuiKoi.service;
 
 import com.example.FengShuiKoi.entity.Account;
+import com.example.FengShuiKoi.entity.Enum.Role;
 import com.example.FengShuiKoi.exception.DuplicateEntity;
 import com.example.FengShuiKoi.exception.EntityNotFoundException;
 import com.example.FengShuiKoi.model.*;
@@ -8,9 +9,13 @@ import com.example.FengShuiKoi.model.Response.AccountResponse;
 import com.example.FengShuiKoi.repos.AccountRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +23,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService implements UserDetailsService {
@@ -47,7 +54,7 @@ public class AuthService implements UserDetailsService {
 
     public AccountResponse register (RegisterRequest registerRequest) {
 
-           Account account = modelMapper.map(registerRequest, Account.class);
+        Account account = modelMapper.map(registerRequest, Account.class);
         try {
             String originPassword = account.getPassword();
             account.setPassword(passwordEncoder.encode(originPassword));
@@ -75,26 +82,35 @@ public class AuthService implements UserDetailsService {
 
 
 
-        public List<Account> getAllAccount(){
-            List<Account> accounts = accountRepository.findAll();
-            return accounts;
-        }
-    public AccountResponse login(LoginRequest loginRequest){
-        try{
-            Authentication authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginRequest.getUsername(),
-                    loginRequest.getPassword()
-            ));
-            Account account=(Account) authentication.getPrincipal();
-            AccountResponse accountResponse= modelMapper.map(account,AccountResponse.class);
-            accountResponse.setToken(tokenService.generateToken(account));
-            return accountResponse;
-        }catch (Exception e){
+    public AccountResponse getAllAccount(int page, int size){
+        Page accounts = accountRepository.findAll(PageRequest.of(page, size));
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setContent(accounts.getContent());
+        accountResponse.setPageNumber(accounts.getNumber());
+        accountResponse.setTotalElements(accounts.getNumberOfElements());
+        accountResponse.setTotalPages(accounts.getTotalPages());
+        return accountResponse;
+    }
+    public AccountResponse login(LoginRequest loginRequest) {
+        Account account = accountRepository.findAccountByUsername(loginRequest.getUsername());
+        if (account == null || !passwordEncoder.matches(loginRequest.getPassword(), account.getPassword())) {
             throw new EntityNotFoundException("Username or password invalid!");
         }
 
-    }
+        // Check if the account has the BANNED role
+        if (account.getRole() == Role.BANNED) {
+            throw new EntityNotFoundException("Account is banned and cannot log in!");
+        }
 
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
+        accountResponse.setToken(tokenService.generateToken(account));
+        return accountResponse;
+    }
     public void forgotPassword(String email) {
         Account account = accountRepository.findAccountByEmail(email);
         if(account == null) {
@@ -119,6 +135,21 @@ public class AuthService implements UserDetailsService {
         }
 
         return account;
+    }
+
+    public AccountResponse updateAccount(Long id, UpdateAccountRequest updateAccountRequest) {
+        Account account = accountRepository.findAccountById(id);
+        if(account == null) {
+            throw new EntityNotFoundException("Account not found");
+        }
+        account.setPhone(updateAccountRequest.getPhone());
+        account.setEmail(updateAccountRequest.getEmail());
+        account.setName(updateAccountRequest.getName());
+        account.setGender(updateAccountRequest.getGender());
+        account.setDateOfBirth(updateAccountRequest.getDateOfBirth());
+        account.setRole(updateAccountRequest.getRole());
+        accountRepository.save(account);
+        return modelMapper.map(account, AccountResponse.class);
     }
 
 
