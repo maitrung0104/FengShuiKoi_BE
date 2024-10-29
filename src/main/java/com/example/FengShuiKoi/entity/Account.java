@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,6 +50,10 @@ public class Account implements UserDetails {
     @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b" , message = "Invalid phone number")
     @Column(unique = true)
     String phone;
+
+    String name;
+    String gender;
+    LocalDate dateOfBirth;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -104,6 +109,7 @@ public class Account implements UserDetails {
     List<Transactions> transactionsTo;
 
     @OneToMany(mappedBy = "account")
+    @JsonIgnore
     List<Koi> kois;
 
     @OneToMany(mappedBy = "member")
@@ -118,6 +124,12 @@ public class Account implements UserDetails {
     @JoinColumn(name = "owner_plan")
     @JsonIgnore
     Plan plan;
+
+    @OneToMany(mappedBy = "member")
+    @JsonIgnore
+    List<OrderPlan> orderPlans;
+
+
 
 }
 

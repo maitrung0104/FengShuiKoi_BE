@@ -18,15 +18,15 @@ public class Suitable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-//    @ManyToMany(mappedBy = "suitables")
+    //    @ManyToMany(mappedBy = "suitables")
 //    Set<Element> elements;
     @ManyToOne
     @JoinColumn(name = "element_id")
-     Element element; // Mệnh
+    Element element; // Mệnh
 
     @ManyToOne
     @JoinColumn(name = "suitable_element_id")
-     Element suitableElement; // Mệnh thích hợp
+    Element suitableElement; // Mệnh thích hợp
 
 
 }

@@ -25,7 +25,7 @@ public class InfoService {
     @Autowired
     KoiRepository koiRepository;
 
-//    public List<LakeDirection> getLakeDirectionsByElement(String elementName) {
+    //    public List<LakeDirection> getLakeDirectionsByElement(String elementName) {
 //        Element element = elementRepository.findByName(elementName);
 //        if (element == null) {
 //            throw new RuntimeException("Element not found");

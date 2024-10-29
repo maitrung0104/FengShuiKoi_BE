@@ -30,7 +30,7 @@ public class KoiRequest {
     String origin;
 
     @NotBlank(message = "Element can not be blank")
-    String p_element;
+    String element;
 
     @NotBlank(message = "Description can not be blank")
     String description;
