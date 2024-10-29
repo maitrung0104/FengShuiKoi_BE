@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>17</java.version>  <!-- 17 -->
 	</properties>
 	<dependencies>
 <!--		<dependency>-->
@@ -127,10 +127,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>cn.6tail</groupId>
 			<artifactId>lunar</artifactId>
 			<version>1.6.3</version>
@@ -139,6 +135,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>be</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

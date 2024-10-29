@@ -15,4 +15,5 @@ public class PlanRequest {
 
     @NotBlank(message = "Description is mandatory")
     String description;
+
 }

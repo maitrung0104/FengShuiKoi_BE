@@ -1,42 +1,33 @@
 package com.example.FengShuiKoi.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
-
+@Entity
 @Getter
 @Setter
-@Entity
-public class Orders {
+public class OrderPlanDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
-
-    Date date;
-
+    int quantity;
+    float price;
     float total;
 
-
+    @ManyToOne
+    @JoinColumn(name = "op_id")
+    @JsonIgnore
+    OrderPlan orderPlan;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "plan_id")
     @JsonIgnore
-    Account member;
+    Plan plan;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<OrderDetail> orderDetails;
-
-    @OneToOne(mappedBy = "orders")
-    @JsonIgnore
-    Payment payment;
 
 
 }
