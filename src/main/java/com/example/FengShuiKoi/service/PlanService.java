@@ -10,9 +10,11 @@ import com.example.FengShuiKoi.repos.PlanRepository;
 import org.hibernate.annotations.Array;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -31,6 +33,7 @@ public class PlanService {
     AccountRepository accountRepository;
 
     // CREATE
+
     public Plan createPlan(PlanRequest planRequest) {
         try {
 
@@ -48,16 +51,16 @@ public class PlanService {
         return plans;
     }
 
-    public Plan getPlanById(long id) {
+    public Plan getPlanById(UUID id) {
         Plan oldPlan = planRepository.findProductById(id);
         if(oldPlan ==null) throw new EntityNotFoundException("Product not found !");
 
 
         return oldPlan;
     }
-        //UPDATE
+    //UPDATE
 
-    public Plan updatePlan(long id,PlanRequest planRequest){
+    public Plan updatePlan(UUID id, PlanRequest planRequest){
         //Buoc 1 Tìm ra thằng Plan càn được update thông qua id
         Plan oldPlan= planRepository.findProductById(id);
 
@@ -78,7 +81,7 @@ public class PlanService {
 
     }
     //DELETE
-    public Plan deletePlan(long id){
+    public Plan deletePlan(UUID id){
         Plan oldPlan=planRepository.findProductById(id);
         if(oldPlan ==null) throw new EntityNotFoundException("Plan not found");
         oldPlan.setDeleted(true);
