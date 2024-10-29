@@ -15,9 +15,9 @@ import java.util.Set;
 public class Element {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
-    String element;
+    Long id;
+    @Column(name = "name", nullable = false, unique = true)
+    String name;
 
     @OneToMany(mappedBy = "element")
     @JsonIgnore
@@ -27,10 +27,17 @@ public class Element {
     @JsonIgnore
     List<LakeDirection> lakeDirections;
 
-    @ManyToMany
-    @JoinTable(name = "elements",
-            joinColumns = @JoinColumn(name = "element_id"),
-            inverseJoinColumns = @JoinColumn(name = "suit_id")
-    )
-    Set<Suitable> suitables;
+//    @ManyToMany
+//    @JoinTable(name = "elements",
+//            joinColumns = @JoinColumn(name = "element_id"),
+//            inverseJoinColumns = @JoinColumn(name = "suit_id")
+//    )
+//    Set<Suitable> suitables;
+//@ManyToMany
+//@JoinTable(
+//        name = "suitable_elements",
+//        joinColumns = @JoinColumn(name = "element_id"),
+//        inverseJoinColumns = @JoinColumn(name = "suitable_element_id")
+//)
+//private Set<Element> suitableElements; // Các mệnh thích hợp
 }

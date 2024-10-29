@@ -14,11 +14,11 @@ import lombok.Setter;
 public class LakeDirection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    Long id;
 
     String direction;
 
-    int lake_element;
+
     @ManyToOne
     @JoinColumn(name = "ele_id")
     Element element;

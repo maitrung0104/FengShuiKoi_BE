@@ -14,7 +14,7 @@ import java.time.format.DateTimeParseException;
 @RestController
 @RequestMapping("/api/canchi")
 @SecurityRequirement(name="api")
-public class CanChiService {
+public class CanChiController {
     @Autowired
     com.example.FengShuiKoi.service.CanChiService canChiService;
     @GetMapping("/menh")
