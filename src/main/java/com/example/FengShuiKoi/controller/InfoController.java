@@ -1,4 +1,5 @@
 package com.example.FengShuiKoi.controller;
+import com.example.FengShuiKoi.entity.Koi;
 import com.example.FengShuiKoi.entity.KoiFishPond;
 import com.example.FengShuiKoi.entity.LakeDirection;
 import com.example.FengShuiKoi.service.InfoService;
@@ -18,9 +19,13 @@ public class InfoController {
     @Autowired
     InfoService infoService;
 
-    @GetMapping("advice")
+    @GetMapping("PondAndDirection")
     public Map<String, Object> getLakeDirectionAndKoiFishPond(@RequestParam String elementName) {
         return infoService.getLakeDirectionAndKoiFishPondByElement(elementName);
+    }
+    @GetMapping("Koi")
+    public List<Koi> getKoiByElement(@RequestParam String elementName) {
+        return infoService.getKoiByElement(elementName);
     }
 }
 

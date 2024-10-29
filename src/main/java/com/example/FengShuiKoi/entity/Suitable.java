@@ -22,11 +22,11 @@ public class Suitable {
 //    Set<Element> elements;
     @ManyToOne
     @JoinColumn(name = "element_id")
-    private Element element; // Mệnh
+     Element element; // Mệnh
 
     @ManyToOne
     @JoinColumn(name = "suitable_element_id")
-    private Element suitableElement; // Mệnh thích hợp
+     Element suitableElement; // Mệnh thích hợp
 
 
 }

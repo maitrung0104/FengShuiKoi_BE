@@ -2,14 +2,8 @@ package com.example.FengShuiKoi.service;
 
 
 
-import com.example.FengShuiKoi.entity.Element;
-import com.example.FengShuiKoi.entity.KoiFishPond;
-import com.example.FengShuiKoi.entity.LakeDirection;
-import com.example.FengShuiKoi.entity.Suitable;
-import com.example.FengShuiKoi.repos.ElementRepository;
-import com.example.FengShuiKoi.repos.KoiFishPondRepository;
-import com.example.FengShuiKoi.repos.LakeDirectionRepository;
-import com.example.FengShuiKoi.repos.SuitableElementRepository;
+import com.example.FengShuiKoi.entity.*;
+import com.example.FengShuiKoi.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +22,8 @@ public class InfoService {
     KoiFishPondRepository koiFishPondRepository;
     @Autowired
     SuitableElementRepository suitableElementRepository;
-
+    @Autowired
+    KoiRepository koiRepository;
 
 //    public List<LakeDirection> getLakeDirectionsByElement(String elementName) {
 //        Element element = elementRepository.findByName(elementName);
@@ -81,5 +76,18 @@ public class InfoService {
         result.put("koiFishPonds", koiFishPondRepository.findByElement(element));
 
         return result;
+    }
+    public List<Koi> getKoiByElement (String elementName){
+        Element element= elementRepository.findByName(elementName);
+        if(element == null){
+            throw new RuntimeException("Element not found");
+        }
+        List<Suitable> suitableElements= suitableElementRepository.findByElement(element);
+        List<Koi> koiList = new ArrayList<>();
+        for (Suitable suitable : suitableElements) {
+            koiList.addAll(koiRepository.findByElement(suitable.getSuitableElement().getName()));
+        }
+
+        return koiList;
     }
 }

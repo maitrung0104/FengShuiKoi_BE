@@ -37,13 +37,12 @@ public class Koi {
     String origin;
 
 
-    String element;
 
     String image;
 
     String description;
 
-
+    String element;
     String price;
 
     @Pattern(regexp = "P\\d{6}", message = "Koi code is not valid! ")
@@ -70,6 +69,12 @@ public class Koi {
     @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     @JsonIgnore
     List<CartItem> cartItems;
+
+
+//    @ManyToOne
+//    @JoinColumn(name ="ele_id")
+//    @JsonIgnore
+//    Element element;
 
 
 

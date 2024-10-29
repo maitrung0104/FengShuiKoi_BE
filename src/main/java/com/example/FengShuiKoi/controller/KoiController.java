@@ -1,6 +1,8 @@
 package com.example.FengShuiKoi.controller;
+import com.example.FengShuiKoi.entity.Element;
 import com.example.FengShuiKoi.entity.Koi;
 
+import com.example.FengShuiKoi.repos.ElementRepository;
 import com.example.FengShuiKoi.service.KoiService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ public class KoiController {
 
     @Autowired
     KoiService koiService;
-
+    @Autowired
+    private ElementRepository elementRepository;
 
 
     // 1. API lấy danh sách lên -> phân trang ở back-end
@@ -28,6 +31,13 @@ public class KoiController {
     // 2. Tạo và lưu đơn hàng
     @PostMapping
     public ResponseEntity create(@RequestBody Koi koi) {
+        Element element = elementRepository.findByName(koi.getElement());
+        if (element == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        // Gán ID mệnh vào cá Koi
+        koi.setElement(element.getName());
         Koi newKoi = koiService.create(koi);
         return ResponseEntity.ok(newKoi);
     }

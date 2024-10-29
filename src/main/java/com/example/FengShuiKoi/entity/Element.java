@@ -26,6 +26,15 @@ public class Element {
     @OneToMany(mappedBy = "element")
     @JsonIgnore
     List<LakeDirection> lakeDirections;
+//
+//    @ManyToMany
+//    @JoinTable(
+//            name = "element_compatibility",
+//            joinColumns = @JoinColumn(name = "element_id"),
+//            inverseJoinColumns = @JoinColumn(name = "compatible_element_id")
+//    )
+//     List<Element> compatibleElements;
+
 
 //    @ManyToMany
 //    @JoinTable(name = "elements",
