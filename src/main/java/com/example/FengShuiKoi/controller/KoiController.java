@@ -29,11 +29,14 @@ public class KoiController {
 
 
     @PostMapping
+
     @PreAuthorize("hasAuthority('OWNER')")
     public ResponseEntity create(@RequestBody Koi koi) {
         Element element = elementRepository.findByName(koi.getElement());
         if (element == null) {
-            return ResponseEntity.badRequest().body(null);
+            element = new Element();
+            element.setName(koi.getElement());
+            elementRepository.save(element);
         }
 
         // Gán ID mệnh vào cá Koi

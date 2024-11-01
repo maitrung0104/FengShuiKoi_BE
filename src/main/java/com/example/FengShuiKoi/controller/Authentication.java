@@ -62,5 +62,10 @@ public class Authentication {
         AccountResponse updatedAccount = authService.updateAccount(id, updateAccountRequest);
         return ResponseEntity.ok(updatedAccount);
     }
+    @PostMapping("/logout")
+    public ResponseEntity logout() {
+        authService.logout();
+        return ResponseEntity.ok("Logged out successfully");
+    }
 
 }

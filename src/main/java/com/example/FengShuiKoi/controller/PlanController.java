@@ -25,6 +25,7 @@ public class PlanController {
 
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity createPlan(@Valid @RequestBody PlanRequest plan){
         Plan newPlan = planService.createPlan(plan);
         return ResponseEntity.ok(newPlan);
@@ -46,6 +47,7 @@ public class PlanController {
 
 
     @PutMapping("{planId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity update(@PathVariable UUID planId, @Valid @RequestBody PlanRequest planRequest){
         Plan updatedPlan = planService.updatePlan(planId, planRequest);
         return ResponseEntity.ok(updatedPlan);
@@ -53,6 +55,7 @@ public class PlanController {
 
 
     @DeleteMapping("{planId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity deletedPlan(@PathVariable UUID planId){
         Plan deletePlan = planService.deletePlan(planId);
         return ResponseEntity.ok(deletePlan);
