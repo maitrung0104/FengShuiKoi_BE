@@ -7,10 +7,8 @@ import com.example.FengShuiKoi.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class InfoService {
@@ -25,57 +23,37 @@ public class InfoService {
     @Autowired
     KoiRepository koiRepository;
 
-//    public List<LakeDirection> getLakeDirectionsByElement(String elementName) {
-//        Element element = elementRepository.findByName(elementName);
-//        if (element == null) {
-//            throw new RuntimeException("Element not found");
-//        }
-//
-//        // Lấy danh sách mệnh phù hợp
-//        List<Suitable> suitableElements = suitableElementRepository.findByElement(element);
-//        List<LakeDirection> lakeDirections = new ArrayList<>();
-//
-//        for (Suitable suitableElement : suitableElements) {
-//            // Lấy hướng hồ từ mệnh phù hợp
-//            List<LakeDirection> directions = lakeDirectionRepository.findByElement(suitableElement.getSuitableElement());
-//            lakeDirections.addAll(directions);
-//        }
-//
-//        return lakeDirections;
-//    }
-//    public List<KoiFishPond> getKoiFishPondsByElement(String elementName) {
-//        Element element = elementRepository.findByName(elementName);
-//        if (element == null) {
-//            throw new RuntimeException("Element not found");
-//        }
-//
-//        // Lấy danh sách mệnh phù hợp
-//        List<Suitable> suitableElements = suitableElementRepository.findByElement(element);
-//        List<KoiFishPond> koiFishPonds = new ArrayList<>();
-//
-//        for (Suitable suitableElement : suitableElements) {
-//            // Lấy hình dáng hồ từ mệnh phù hợp
-//            List<KoiFishPond> ponds = koiFishPondRepository.findByElement(suitableElement.getSuitableElement());
-//            koiFishPonds.addAll(ponds);
-//        }
-//
-//        return koiFishPonds;
-//    }
-    public Map<String, Object> getLakeDirectionAndKoiFishPondByElement(String elementName) {
+    public List<String> getDirections(String elementName) {
         Element element = elementRepository.findByName(elementName);
-        if (element == null) {
-            throw new RuntimeException("Element not found");
+        List<Suitable> suitableElements = suitableElementRepository.findByElement(element);
+        Set<String> directions = new HashSet<>();
+
+        for (Suitable suitable : suitableElements) {
+            // Lấy hướng từ mệnh thích hợp
+            List<LakeDirection> lakeDirections = lakeDirectionRepository.findByElement(suitable.getSuitableElement());
+            for (LakeDirection direction : lakeDirections) {
+                directions.add(direction.getDirection());
+            }
         }
 
-        // Lấy danh sách mệnh phù hợp
+        return new ArrayList<>(directions);
+    }
+
+    public List<String> getShapes(String elementName) {
+        Element element = elementRepository.findByName(elementName);
         List<Suitable> suitableElements = suitableElementRepository.findByElement(element);
+        Set<String> shapes = new HashSet<>();
 
-        // Lấy danh sách hướng hồ và hình dáng hồ
-        Map<String, Object> result = new HashMap<>();
-        result.put("lakeDirections", lakeDirectionRepository.findByElement(element));
-        result.put("koiFishPonds", koiFishPondRepository.findByElement(element));
+        for (Suitable suitable : suitableElements) {
+            // Lấy hình dáng từ mệnh thích hợp
+            List<KoiFishPond> koiShapes = koiFishPondRepository.findByElement(suitable.getSuitableElement());
+            for (KoiFishPond shape : koiShapes) {
+                shapes.add(shape.getShape());
+            }
+        }
 
-        return result;
+        return new ArrayList<>(shapes);
+
     }
     public List<Koi> getKoiByElement (String elementName){
         Element element= elementRepository.findByName(elementName);

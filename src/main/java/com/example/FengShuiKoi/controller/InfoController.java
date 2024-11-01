@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,16 @@ public class InfoController {
     InfoService infoService;
 
     @GetMapping("PondAndDirection")
-    public Map<String, Object> getLakeDirectionAndKoiFishPond(@RequestParam String elementName) {
-        return infoService.getLakeDirectionAndKoiFishPondByElement(elementName);
+    public Map<String, Object> getDirectionsAndShapes(@RequestParam String element) {
+        List<String> directions = infoService.getDirections(element);
+        List<String> shapes = infoService.getShapes(element);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("element", element);
+        response.put("directions", directions);
+        response.put("shapes", shapes);
+
+        return response;
     }
     @GetMapping("Koi")
     public List<Koi> getKoiByElement(@RequestParam String elementName) {

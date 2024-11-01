@@ -71,11 +71,6 @@ public class Koi {
     List<CartItem> cartItems;
 
 
-//    @ManyToOne
-//    @JoinColumn(name ="ele_id")
-//    @JsonIgnore
-//    Element element;
-
 
 
 
