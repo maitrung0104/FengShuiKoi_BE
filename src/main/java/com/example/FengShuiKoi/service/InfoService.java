@@ -40,12 +40,8 @@ public class InfoService {
 
     public List<String> getShapes(String elementName) {
         Element element = elementRepository.findByName(elementName);
-        if (element == null) {
-            throw new RuntimeException("Element not found");
-        }
-
-        // Lấy danh sách mệnh phù hợp
         List<Suitable> suitableElements = suitableElementRepository.findByElement(element);
+        Set<String> shapes = new HashSet<>();
 
         for (Suitable suitable : suitableElements) {
             // Lấy hình dáng từ mệnh thích hợp
