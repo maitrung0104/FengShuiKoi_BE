@@ -20,7 +20,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     PaymentEnums payment_method;
 
-    // payment chỉ tạo ra khi order đc thành công . đặt key ở payment
 
     @OneToOne
     @JoinColumn(name = "order_id")

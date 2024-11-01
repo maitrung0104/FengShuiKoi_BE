@@ -151,7 +151,9 @@ public class AuthService implements UserDetailsService {
         accountRepository.save(account);
         return modelMapper.map(account, AccountResponse.class);
     }
-
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
