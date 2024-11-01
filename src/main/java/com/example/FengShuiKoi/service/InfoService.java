@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class InfoService {
@@ -53,7 +52,7 @@ public class InfoService {
         }
 
         return new ArrayList<>(shapes);
-
+    
     }
     public List<Koi> getKoiByElement (String elementName){
         Element element= elementRepository.findByName(elementName);

@@ -66,10 +66,15 @@ public class Koi {
     @JsonIgnore
     Account account;
 
-    @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<CartItem> cartItems;
+//    @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    List<CartItem> cartItems;
 
+
+//    @ManyToOne
+//    @JoinColumn(name ="ele_id")
+//    @JsonIgnore
+//    Element element;
 
 
 

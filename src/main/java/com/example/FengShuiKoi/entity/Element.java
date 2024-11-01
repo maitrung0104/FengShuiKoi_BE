@@ -21,32 +21,9 @@ public class Element {
 
     @OneToMany(mappedBy = "element")
     @JsonIgnore
-    List<KoiFishPond>koiFishPonds;
+    List<KoiFishPond> koiFishPonds;
 
     @OneToMany(mappedBy = "element")
     @JsonIgnore
     List<LakeDirection> lakeDirections;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "element_compatibility",
-//            joinColumns = @JoinColumn(name = "element_id"),
-//            inverseJoinColumns = @JoinColumn(name = "compatible_element_id")
-//    )
-//     List<Element> compatibleElements;
-
-
-//    @ManyToMany
-//    @JoinTable(name = "elements",
-//            joinColumns = @JoinColumn(name = "element_id"),
-//            inverseJoinColumns = @JoinColumn(name = "suit_id")
-//    )
-//    Set<Suitable> suitables;
-//@ManyToMany
-//@JoinTable(
-//        name = "suitable_elements",
-//        joinColumns = @JoinColumn(name = "element_id"),
-//        inverseJoinColumns = @JoinColumn(name = "suitable_element_id")
-//)
-//private Set<Element> suitableElements; // Các mệnh thích hợp
 }

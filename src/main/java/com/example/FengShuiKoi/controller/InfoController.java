@@ -1,11 +1,8 @@
 package com.example.FengShuiKoi.controller;
 import com.example.FengShuiKoi.entity.Koi;
-import com.example.FengShuiKoi.entity.KoiFishPond;
-import com.example.FengShuiKoi.entity.LakeDirection;
 import com.example.FengShuiKoi.service.InfoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

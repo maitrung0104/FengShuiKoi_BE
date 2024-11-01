@@ -9,14 +9,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 public class Plan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID id;
 
     @JsonIgnore
     boolean isDeleted = false;
@@ -37,5 +38,12 @@ public class Plan {
 
     @OneToMany(mappedBy = "plan")
     List<Account> accounts;
+
+    @OneToMany(mappedBy = "plan")
+    @JsonIgnore
+    List<OrderPlanDetail> orderPlanDetails;
+
+    @OneToMany(mappedBy = "plan")
+    List<Payment> payments;
 
 }
